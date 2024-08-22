@@ -6,5 +6,6 @@ public class Hello {
 		System.out.print("What is your name? ");
 		String name = in.nextLine();
                 System.out.println("Hello, " + name);
+		System.out.println("I am your developer")
         }		
 }
