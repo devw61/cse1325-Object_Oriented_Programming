@@ -7,8 +7,8 @@ public class Coin {
                 this.year = year;
         }
 
-        public static double getValue() {
-		return Denomination.getValue();
+        public double getValue()  {
+		return denomination.getValue();
         }
 
         public int getYear() {
