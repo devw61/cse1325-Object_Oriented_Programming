@@ -2,7 +2,8 @@ public class Purse {
 	public static void main(String[] args) {
 		// initialize  fields
 		Coin coins[] = new Coin[5];
-		double total = 0.0 ;
+		double total_amount = 0.0 ;
+		double total_weight = 0.0 ;
 		int earliest_date = 4000;
 		int latest_date = 0;
 				
@@ -15,7 +16,8 @@ public class Purse {
 			
 		for (Coin coin : coins) {
 			System.out.printf("%s\n", coin.toString());
-			total = total + coin.getValue();
+			total_amount = total_amount + coin.getValue();
+			toal_weight = total_weight + coin.getWeight();
 			if (earliest_date > coin.getYear()) {
 				earliest_date = coin.getYear();
 			}
@@ -24,6 +26,6 @@ public class Purse {
 			}
 		}
 
-		System.out.println("You have $" + total + " in coins between " + earliest_date + " and " + latest_date);
+		System.out.println("You have $" + total_amount + " in coins between " + earliest_date + " and " + latest_date + " weighing " + total_weight + " grams");
 	}
 }
