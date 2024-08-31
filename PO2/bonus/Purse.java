@@ -14,7 +14,7 @@ public class Purse {
                 coins[4] = new Coin(Denomination.QUARTER, 2011);
 			
 		for (Coin coin : coins) {
-			System.out.printf("%s %d", coin.getYear(), coin.getValue());
+			System.out.printf("%s", coin.toString());
 			total = total + coin.getValue();
 			if (earliest_date > coin.getYear()) {
 				earliest_date = coin.getYear();

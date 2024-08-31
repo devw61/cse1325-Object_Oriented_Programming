@@ -7,7 +7,7 @@ public class Coin {
                 this.year = year;
         }
 
-        public double getValue() {
+        public static double getValue() {
 		return Denomination.getValue();
         }
 
@@ -15,8 +15,8 @@ public class Coin {
                 return year;
         }
 
-	@Override String toString() {
-		return coin.getYear() + " " + coin.getValue();
+	public String toString() {
+		return this.year + " " + this.denomination.toString();
 	}
 }
 
