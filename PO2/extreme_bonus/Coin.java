@@ -12,20 +12,22 @@ public class Coin {
         }
 
 	public double getWeight() {
-		if denomination.name().equals("PENNY") && year <= 1983 {
-			return 3.11
-		} else if denomination.name().equals("PENNY") && year > 1983 {
-			return 2.5
-		} else if denomination.name().equals("NICKEL") {
-                        return 5.0
-                } else if denomination.name().equals("DIME") && year <= 1965 {
-                        return 2.5
-                } else if denomination.name().equals("DIME") && year > 1965 {
-                        return 2.268
-		} else if denomination.name().equals("QUARTER") && year <= 1965 {
-                        return 6.25
-		} else if denomination.name().equals("QUARTER") && year > 1965 {
-                        return 5.67 
+		if (denomination.name().equals("PENNY") && year <= 1983) {
+			return 3.11;
+		} else if (denomination.name().equals("PENNY") && year > 1983) {
+			return 2.5;
+		} else if (denomination.name().equals("NICKEL")) {
+                        return 5.0;
+                } else if (denomination.name().equals("DIME") && year <= 1965) {
+                        return 2.5;
+                } else if (denomination.name().equals("DIME") && year > 1965) {
+                        return 2.268;
+		} else if (denomination.name().equals("QUARTER") && year <= 1965) {
+                        return 6.25;
+		} else if (denomination.name().equals("QUARTER") && year > 1965) {
+                        return 5.67;
+		} else {
+			throw new IllegalArgumentException("Invalide Coin");
 		}
 
 	}
