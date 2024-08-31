@@ -8,23 +8,15 @@ public class Coin {
         }
 
         public double getValue() {
-                switch(denomination) {
-                        case PENNY:
-                                return .01;
-                        case NICKEL:
-                                return .05;
-                        case DIME:
-                                return .10;
-                        case QUARTER:
-                                return .25;
-                        default:
-                                System.out.print("invalid coin");
-				return 0.0;
-                }
+		return Denomination.getValue();
         }
 
         public int getYear() {
                 return year;
         }
+
+	@Override String toString() {
+		return coin.getYear() + " " + coin.getValue();
+	}
 }
 
