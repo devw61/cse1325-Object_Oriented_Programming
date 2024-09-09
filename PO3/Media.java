@@ -1,6 +1,6 @@
 public class Media {
-	String title;
-	String url;
+	private String title;
+	private String url;
 
 	public Media(String title, String url){
 		this.title = title;

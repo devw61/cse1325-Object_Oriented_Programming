@@ -1,6 +1,6 @@
 public class Account {
-	int accountNumber;
-	static int nextAccountNumber;
+	private int accountNumber;
+	private static int nextAccountNumber;
 
 	public Account(){ 
 		Account.nextAccountNumber++;

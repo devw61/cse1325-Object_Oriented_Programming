@@ -1,8 +1,8 @@
 public class Student {
-	String name;
-	int id;
-	String email;
-	Account account;
+	private String name;
+	private int id;
+	private String email;
+	private Account account;
 
 	public Student(String name, int id, String email){
 		this.email = email;
