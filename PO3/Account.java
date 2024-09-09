@@ -4,7 +4,7 @@ public class Account {
 
 	public Account(){ 
 		this.accountNumber = nextAccountNumber; 
-		this.nextAccountNumber = nextAccountNumber++;
+		Account.nextAccountNumber++;
 	}
 
 	public int getAccountNumber(){
@@ -12,8 +12,14 @@ public class Account {
 	}
 
 	public String Play(Media media){
-		private StringBuilder media_playing = new StringBuilder;
-		for (char i : media.toString().indexOf('(') ) { media_playing.append(media[i]); }
+		StringBuilder media_playing = new StringBuilder();
+		for (int i = 0; i<media.toString().length(); i++) { 
+			if (i < media.toString().indexOf('(')){
+				media_playing.append(media.toString().charAt(i) ); 
+			} else {
+				break;
+			}
+		}
 		return "Playing " + media_playing;
 	}
 }
