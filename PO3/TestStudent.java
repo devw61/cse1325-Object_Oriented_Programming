@@ -4,7 +4,7 @@ public class TestStudent {
 		String info = student.toString();
 		Integer num;
 		Media media = new Media("Hummingbird", "https://open.spotify.com/track/6HexNTb392JS071DoTGo0y?si=1e173cc3f17747a1");
-		int error_num;
+		int error_num = 0;
 
 		// verify toString() method 
 		if (info.indexOf("Devin") != 0) {
@@ -44,5 +44,7 @@ public class TestStudent {
 			System.err.println("Error: request media did not return correct string, instead: " + student.requestMedia(media));
 			error_num++;
 		}
+
+		System.out.println("Number of errors: " + error_num);
 	}
 }
