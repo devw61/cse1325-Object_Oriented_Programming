@@ -16,14 +16,12 @@ public class Student {
 	}
 
 	
-
-
-	public void requestMedia(Media media){
-		return media.play()
+	public String requestMedia(Media media){
+		return account.Play(media);
 	}
 
 	@Override
 	public String toString() {
-		return this.name + '(' + this.id " + ", " + this.email + ", Account: #" + this.account.getAccountNumber() + ')'; 
+		return this.name + '(' + this.id  + ", " + this.email + ", Account: #" + this.account.getAccountNumber() + ')'; 
 	}
 }

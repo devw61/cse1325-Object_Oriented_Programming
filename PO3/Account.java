@@ -3,8 +3,8 @@ public class Account {
 	static int nextAccountNumber;
 
 	public Account(){ 
-		this.accountNumber = nextAccountNumber; 
 		Account.nextAccountNumber++;
+		this.accountNumber = nextAccountNumber; 
 	}
 
 	public int getAccountNumber(){
