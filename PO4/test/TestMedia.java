@@ -11,8 +11,5 @@ public class TestMedia {
 			System.err.println("Error: media.toString() returned incorrect string: " + media.toString());
 		}
 
-		if (!media.toString().equals("random thing")){
-			System.err.println("Error: media.toString() returned did not return 'random thing' instead: " + media.toString());
-		}
 	}
 }
