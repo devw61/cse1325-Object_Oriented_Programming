@@ -8,7 +8,7 @@ public class TestStudent {
 		Student student = new Student("Devin", 1002098917, "dtw8917@mavs.uta.edu");
 		String info = student.toString();
 		Integer num;
-		Media media = new Media("Hummingbird", "https://open.spotify.com/track/6HexNTb392JS071DoTGo0y?si=1e173cc3f17747a1");
+		Media media = new Media("Hummingbird", "https://open.spotify.com/track/6HexNTb392JS071DoTGo0y?si=1e173cc3f17747a1", 20);
 		int error_num = 0;
 
 		// verify toString() method 
@@ -38,7 +38,6 @@ public class TestStudent {
 			System.err.println("Error: No error was thrown with incorrect email");
 			error_num++;
 		} catch (IllegalArgumentException e) {
-			error_num++;
 		} catch (Exception e) {
 			System.err.println("Error: " + e);	
 			error_num++;
