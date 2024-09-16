@@ -9,20 +9,28 @@ public class Student {
 	private String email;
 	private Account account;
 
-	public Student(String name, int id, String email){
+	public Student(String name, int id, String email, boolean unlimited){
 		this.email = email;
-		if (!this.email.endsWith("@mavs.edu") && !this.email.endsWith("@mavs.uta.edu")) {
+		if (this.email.endsWith("@uta.edu") || this.email.endsWith("@mavs.uta.edu")) {
+			this.id = id;
+        	        this.name = name;
+			if (unlimited) {
+				this.account = new Unlimited();
+			} else {
+	                	this.account = new Alacarte();
+			}
+		} else {
                 	throw new IllegalArgumentException("Non-UTA email address: " + this.email);
         	}
-
-		this.id = id;
-		this.name = name;
-		this.account = new Account();
 	}
 
 	
 	public String requestMedia(Media media){
 		return account.Play(media);
+	}
+
+	public Account getAccount() {
+		return this.account;
 	}
 
 	@Override
