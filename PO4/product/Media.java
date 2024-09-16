@@ -1,24 +1,31 @@
-/*
+/**
 *                the product Media
 *
-*  @author:      Devin T. Wingfield
-*  @version:     1.0
-*  @since:       1,0
+*  @author      Devin T. Wingfield
+*  @version     2.0
+*  @since       1.0
 */
 
 package product;
+
+/**
+*
+*  struct for media
+*
+*/
 
 public class Media {
 	private String title;
 	private String url;
 	private int points;
 
-	/*
+	/**
 	*                Creates instance of Media
 	*	
-	*  @param:       String title, String url, int points
-	*  @returns      null
-	*  @since:       1.0
+	*  @param title       String - title of the media
+	*  @param url         String - url of the media
+	*  @param points      int - cost of plaing the media 
+	*  @since            1.0
 	*/
 
 	public Media(String title, String url, int points){
@@ -27,24 +34,22 @@ public class Media {
 		this.points = points;
 	}
 
-	/*
+	/**
         *                returns the cost of the media
         *
-        *  @param:       nu;;
-        *  @returns      cost of playing the media
-        *  @since:       1.0
+        *  @return       cost of playing the media
+        *  @since       1.0
         */
 
 	public int getPoints() {
 		return this.points;
  	}	
 	
-	/*
+	/**
         *                returns formatted option of the media instance
         *
-        *  @param:       null
-        *  @returns      formatted string of the media instance
-        *  @since:       1.0
+        *  @return      formatted string of the media instance
+        *  @since       1.0
         */
 
 	@Override
