@@ -25,3 +25,7 @@ replay_pid*
 
 
 ./class_stuff
+
+./testing.java
+
+*.DS_Store
