@@ -30,6 +30,12 @@ public class Main {
 	private boolean dirty;
 
 	private void newMoes() {
+		if (dirty) {
+			String choice = Menu.getString("Current file has unsaved changes, do you want to save before opening a new file? (yes/no)", "");
+			if (choice.equals("yes")) {
+				save();
+			}
+		}
 		moes = new Moes();
 	}
 
@@ -37,6 +43,7 @@ public class Main {
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
 			bw.write("" + magicCookie + '\n' + fileVersion + '\n');
 			moes.save(bw);
+			dirty = false;
 		} catch (Exception e) {
 			System.err.println("Failed to save in main: " + e);
 		}
@@ -54,6 +61,7 @@ public class Main {
 				filename = new_filename + extension;
 			}
 			save();
+			dirty = false;
 		} else {
 			System.out.println("No filename entered, no changes made.");
 		}
@@ -68,6 +76,12 @@ public class Main {
 		}
 
 		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+			if (dirty) {
+				String choice = Menu.getString("Current file has unsaved changes, do you want to save before opening a new file? (yes/no)", "");
+				if (choice.equals("yes")) {
+					save();
+				}
+			}
 			String file_magic_cookie = br.readLine();
 			String file_version = br.readLine();
 			if (file_magic_cookie.equals(magicCookie) && file_version.equals(fileVersion)) {
