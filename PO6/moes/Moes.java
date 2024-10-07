@@ -65,28 +65,37 @@ public class Moes {
 	public Moes() {}
 
 	public Moes(BufferedReader br) throws IOException {
+		int line = 0;
 		int size = Integer.parseInt(br.readLine());
 		library = new ArrayList<>();
 		for (int i = 0; i<size; i++) {
 			library.add(new Media(br));
 		}
-
+		
 		size = Integer.parseInt(br.readLine());
-                customers = new ArrayList<>();
-                for (int i = 0; i<size; i++) {
-                        customers.add(new Student(br));
-                }
+		customers = new ArrayList<>();
+		for (int i = 0; i<size; i++) {
+			customers.add(new Student(br));
+		}
 
 	}
 
 	public void save(BufferedWriter bw) throws IOException{
 		// save library array
-		bw.write("" + library.size() + '\n');
-		for (Media media : library) media.save(bw);
+		try {
+			bw.write("" + library.size() + '\n');
+			for (Media media : library) media.save(bw);
+		} catch (IOException e) {
+			System.out.println("Error saving library: " + e);
+		}
 		
 		//save customer array
-		bw.write("" + customers.size() + '\n');
-		for (Student student : customers) student.save(bw);
+		try {
+			bw.write("" + customers.size() + '\n');
+			for (Student student : customers) student.save(bw);
+		} catch (IOException e) {
+			System.out.println("Error saving customers: " + e);
+		}
 	}	
 	
 }

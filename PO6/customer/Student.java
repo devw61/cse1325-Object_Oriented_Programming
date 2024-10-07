@@ -26,28 +26,35 @@ public class Student {
 	}
 	
 	public Student(BufferedReader br) throws IOException {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
-        String object_type = dataInputStream.readUTF();
+		try {
+			String object_type = br.readLine();
 
-        switch (object_type) {
-            case "Unlimited":
-                account = new Unlimited(br);
-                break;
-            case "Alacarte":
-                account = new Alacarte(br);
-                break;
-            default:
-                throw new IOException("Unknown object type: " + object_type);
-        }
+			switch (object_type) {
+				case "customer.Unlimited":
+					account = new Unlimited(br);
+					break;
+				case "customer.Alacarte":
+					account = new Alacarte(br);
+					break;
+				default:
+					throw new IOException("Unknown object type: " + object_type);
+			}
+
+			this.name = br.readLine();
+			this.id = Integer.parseInt(br.readLine());
+			this.email = br.readLine();
+		} catch (Exception e) {
+			System.err.println("Could not read account: " + e);
+		}
     }
 
     public void save(BufferedWriter bw) throws IOException {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
-        dataOutputStream.writeUTF(account.getClass().getName());
-
+        bw.write("" + account.getClass().getName() + '\n');
+		
         account.save(bw);
+		bw.write("" + this.name + '\n');
+		bw.write("" + this.id + '\n');
+		bw.write("" + this.email + '\n');
     }
 	
 	public String requestMedia(Media media){

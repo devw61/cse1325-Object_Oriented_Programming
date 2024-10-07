@@ -24,7 +24,7 @@ public class Main {
 	private String output;
 	private boolean running;
 	private static final String extension = ".txt";
-	private String filename;
+	private String filename = "file.txt";
 	private static String fileVersion = "1.0";
 	private static String magicCookie = "MOES";
 
@@ -44,18 +44,17 @@ public class Main {
 	private void saveAs() {
 		System.out.println("Current filename: " + filename);
 		Scanner in = new Scanner(System.in);
-
-		try {
 			System.out.print("Enter new filename: ");
 			String new_filename = in.nextLine();
+		if (!new_filename.equals("")) {
 			if (new_filename.endsWith(extension)) {
 				filename = new_filename;
 			} else {
 				filename = new_filename + extension;
 			}
 			save();
-		} catch (Exception e) {
-			System.err.println("Failed to save: " + e);
+		} else {
+			System.out.println("No filename entered, no changes made.");
 		}
 	}
 
@@ -63,17 +62,17 @@ public class Main {
 		System.out.println("Current filename: " + filename);
 		Scanner in = new Scanner(System.in);
 
-		try {
-			System.out.print("Enter new filename: ");
-                        String new_filename = in.nextLine();
-                        if (!new_filename.endsWith(extension)) {
-                                filename = new_filename + extension;
-                        }
+		System.out.print("Enter new filename: ");
+		String new_filename = in.nextLine();
+		if (!new_filename.equals("")){
+			if (!new_filename.endsWith(extension)) {
+					new_filename = new_filename + extension;
+			}
 
 			try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
 				String file_magic_cookie = br.readLine();
 				String file_version = br.readLine();
-				if (file_magic_cookie == magicCookie && file_version == fileVersion) {
+				if (file_magic_cookie.equals(magicCookie) && file_version.equals(fileVersion)) {
 					try {
 						moes = new Moes(br);
 						filename = new_filename;
@@ -88,8 +87,8 @@ public class Main {
 			} catch (Exception e) {
 				System.err.println("Failed to save: " + e);
 			}
-		} catch (Exception e) {
-			System.out.println("Skipping...");
+		} else {
+			System.out.println("No filename entered, no file was opened.");
 		}
 	}
 
@@ -225,9 +224,10 @@ public class Main {
 		menu.addMenuItem(new MenuItem("List Media",       () -> listMedia()));
 		menu.addMenuItem(new MenuItem("List Available Points",     () -> listAvailablePoints()));
 		menu.addMenuItem(new MenuItem("Buy Points",     () -> buyPoints()));
-		menu.addMenuItem(new MenuItem("save",     () -> save()));
-		menu.addMenuItem(new MenuItem("save as",     () -> saveAs()));
-		menu.addMenuItem(new MenuItem("open",     () -> open()));
+		menu.addMenuItem(new MenuItem("New Moes",     () -> newMoes()));
+		menu.addMenuItem(new MenuItem("Save",     () -> save()));
+		menu.addMenuItem(new MenuItem("Save as",     () -> saveAs()));
+		menu.addMenuItem(new MenuItem("Open",     () -> open()));
 		menu.addMenuItem(new MenuItem("Exit",               () -> endApp()));
 	
 	}
