@@ -93,33 +93,11 @@ public class Main {
 	}
 
 	private void addStudent(){
-		Scanner in = new Scanner(System.in);
-
-		System.out.print("Enter student name: ");
-		String name = in.nextLine();
-
-		System.out.print("Enter student ID: ");
-		int id;
-	        while (!in.hasNextInt()) { 
-        	    System.out.println("Invalid input. Please enter an integer for ID: ");
-	            in.nextLine(); 
-        	}
-	        id = in.nextInt();
-		in.nextLine();
-
-		System.out.print("Enter student email: ");
-		String email = in.nextLine();
-		System.out.print("Does account have unlimited media? (true/false): ");
-
-		boolean act_type;
-	        while (!in.hasNextBoolean()) { 
-        	    System.out.println("Invalid input. Please enter 1 or 0 for account type: ");
-	            in.nextLine(); 
-        	}
-	        act_type = in.nextBoolean();
-
-		Student student = new Student(name, id, email, act_type);
-	
+		String name = Menu.getString("Student name? ", ""); if (name == null) return;
+		Integer id = Menu.getInt("Student ID? ", ""); if (id == null) return;
+		String email = Menu.getString("Student email? ", ""); if (email == null) return;
+		String account = Menu.getString("Alacarte or Unlimited? ", ""); if (account == null) return;
+		Student student = new Student(name, id, email, (account.equals("Unlimited")));
 		moes.addStudent(student);
 	}
 	
