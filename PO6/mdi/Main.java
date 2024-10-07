@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class Main {
 	public static void main(String[] args) {
-		Main mainInstance = new Main(new Moes(), new Menu(), "", true);
+		Main mainInstance = new Main(new Moes(), new Menu(), "", true, false);
 		mainInstance.mdi();
 	}
 
@@ -27,6 +27,7 @@ public class Main {
 	private String filename = "file.txt";
 	private static String fileVersion = "1.0";
 	private static String magicCookie = "MOES";
+	private boolean dirty;
 
 	private void newMoes() {
 		moes = new Moes();
@@ -60,35 +61,29 @@ public class Main {
 
 	private void open() {
 		System.out.println("Current filename: " + filename);
-		Scanner in = new Scanner(System.in);
 
-		System.out.print("Enter new filename: ");
-		String new_filename = in.nextLine();
-		if (!new_filename.equals("")){
-			if (!new_filename.endsWith(extension)) {
-					new_filename = new_filename + extension;
-			}
+		String new_filename = Menu.getString("Enter new filename: ", "");
+		if (!new_filename.endsWith(extension)) {
+				new_filename = new_filename + extension;
+		}
 
-			try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
-				String file_magic_cookie = br.readLine();
-				String file_version = br.readLine();
-				if (file_magic_cookie.equals(magicCookie) && file_version.equals(fileVersion)) {
-					try {
-						moes = new Moes(br);
-						filename = new_filename;
-					} catch (Exception e) {
-						System.err.println("Could not recreate moes: " + e);
-					}
-				
-				} else {
-					throw new IOException("ERROR: incorrect magic cookie or file version\nmagic cookie: " + file_magic_cookie + ", excpected: " + magicCookie + "\nfile version: " + file_version + ", expected: " + fileVersion);
+		try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+			String file_magic_cookie = br.readLine();
+			String file_version = br.readLine();
+			if (file_magic_cookie.equals(magicCookie) && file_version.equals(fileVersion)) {
+				try {
+					moes = new Moes(br);
+					filename = new_filename;
+				} catch (Exception e) {
+					System.err.println("Could not recreate moes: " + e);
 				}
-
-			} catch (Exception e) {
-				System.err.println("Failed to save: " + e);
+			
+			} else {
+				throw new IOException("ERROR: incorrect magic cookie or file version\nmagic cookie: " + file_magic_cookie + ", excpected: " + magicCookie + "\nfile version: " + file_version + ", expected: " + fileVersion);
 			}
-		} else {
-			System.out.println("No filename entered, no file was opened.");
+
+		} catch (Exception e) {
+			System.err.println("Failed to save: " + e);
 		}
 	}
 
@@ -99,6 +94,8 @@ public class Main {
 		String account = Menu.getString("Alacarte or Unlimited? ", ""); if (account == null) return;
 		Student student = new Student(name, id, email, (account.equals("Unlimited")));
 		moes.addStudent(student);
+
+		dirty = true;
 	}
 	
 	private void listStudents() {
@@ -126,6 +123,8 @@ public class Main {
 		Media media = new Media(title, url, cost);
 
 		moes.addMedia(media);	
+
+		dirty = true;
 	}
 
 	private void listMedia() {
@@ -187,13 +186,16 @@ public class Main {
 		in.nextLine();
 
 		System.out.println(moes.buyPoints(student_index, bought_points));
+
+		dirty = true;
 	}
 
-	public Main(Moes moes, Menu menu, String output, boolean running){
+	public Main(Moes moes, Menu menu, String output, boolean running, boolean dirty) {
 		this.moes = moes;
 	    this.menu = menu;
 		this.output = output;
 		this.running = running;
+		this.dirty = dirty;
 		
 		menu.addMenuItem(new MenuItem("Add a Student",     () -> addStudent()));
 		menu.addMenuItem(new MenuItem("List Students",       () -> listStudents()));
