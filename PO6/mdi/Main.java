@@ -6,6 +6,11 @@ import customer.Student;
 import product.Media;
 
 import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Main {
 	public static void main(String[] args) {
@@ -18,6 +23,71 @@ public class Main {
 	private Menu menu = new Menu();
 	private String output;
 	private boolean running;
+	private static final String extension = ".txt";
+	private String filename;
+	private static String fileVersion;
+	private static String magicCookie;
+
+	private void newMoes() {
+		moes = new Moes();
+	}
+
+	private void save() {
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(filename))) {
+			bw.write("" + magicCookie + '\n' + fileVersion + '\n');
+			moes.save(bw);
+		} catch (Exception e) {
+			System.err.println("Failed to save: " + e);
+		}
+	}
+
+	private void saveAs() {
+		System.out.println("Current filename: " + filename);
+		Scanner in = new Scanner(System.in);
+
+		try {
+			System.out.print("Enter new filename: ");
+			String new_filename = in.nextLine();
+			if (new_filename.endsWith(extension)) {
+				filename = new_filename;
+			} else {
+				filename = new_filename + extension;
+			}
+			save();
+		} catch (Exception e) {
+			System.err.println("Failed to save: " + e);
+		}
+	}
+
+	private void open() {
+		System.out.println("Current filename: " + filename);
+		Scanner in = new Scanner(System.in);
+
+		try {
+			System.out.print("Enter new filename: ");
+                        String new_filename = in.nextLine();
+                        if (new_filename.endsWith(extension)) {
+                                filename = new_filename;
+                        } else {
+                                filename = new_filename + extension;
+                        }
+
+			try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+				String file_magic_cookie = br.readLine();
+				String file_version = br.readLine();
+				if (file_magic_cookie == magicCookie && file_version == fileVersion) {
+
+				} else {
+					throw new IOException("ERROR: incorrect magic cookie or file version\nmagic cookie: " + file_magic_cookie + ", excpected: " + magicCookie + "\nfile version: " + file_version + ", expected: " + fileVersion);
+				}
+
+			} catch (Exception e) {
+				System.err.println("Failed to save: " + e);
+			}
+		} catch (Exception e) {
+			System.out.println("Skipping...");
+		}
+	}
 
 	private void addStudent(){
 		Scanner in = new Scanner(System.in);

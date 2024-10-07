@@ -3,6 +3,9 @@ package moes;
 import java.util.ArrayList;
 import customer.*;
 import product.Media;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
 public class Moes {
 	ArrayList<Media> library = new ArrayList<>();
@@ -58,4 +61,32 @@ public class Moes {
 
 		return student.requestMedia(media);
 	}
+
+	public Moes() {}
+
+	public Moes(BufferedReader br) throws IOException {
+		int size = Integer.parseInt(br.readLine());
+		library = new ArrayList<>();
+		for (int i = 0; i<size; i++) {
+			library.add(new Media(br));
+		}
+
+		size = Integer.parseInt(br.readLine());
+                customers = new ArrayList<>();
+                for (int i = 0; i<size; i++) {
+                        customers.add(new Student(br));
+                }
+
+	}
+
+	public void save(BufferedWriter bw) throws IOException{
+		// save library array
+		bw.write("" + library.size() + '\n');
+		for (Media media : library) media.save(bw);
+		
+		//save customer array
+		bw.write("" + customers.size() + '\n');
+		for (Student student : customers) student.save(bw);
+	}	
+	
 }

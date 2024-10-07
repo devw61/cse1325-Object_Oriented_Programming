@@ -26,29 +26,29 @@ public class Student {
 	}
 	
 	public Student(BufferedReader br) throws IOException {
-		
-		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-	        DataInputStream dataInputStream = new DataInputStream(byteArrayInputStream);
-		String object_type = DataInputStream.readUTF();
-		
-		switch (object_type) {
-			case "Unlimited":
-				Unlimited(br);
-			case "Alacarte":
-				Alacarte(br);
-			defualt:
-				throw new IOException("Unknown object type: " + object_type);
-		}
-	}
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        DataInputStream dataInputStream = new DataInputStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
+        String object_type = dataInputStream.readUTF();
 
-	public void save(BufferedWriter bw) throws IOException {
-		// write the account object type to the output stream
-		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        	DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
-		dataOutputStream.writeUTF(account.getClass().getName());
+        switch (object_type) {
+            case "Unlimited":
+                account = new Unlimited(br);
+                break;
+            case "Alacarte":
+                account = new Alacarte(br);
+                break;
+            default:
+                throw new IOException("Unknown object type: " + object_type);
+        }
+    }
 
-		account.save(bw);
-	}
+    public void save(BufferedWriter bw) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        DataOutputStream dataOutputStream = new DataOutputStream(byteArrayOutputStream);
+        dataOutputStream.writeUTF(account.getClass().getName());
+
+        account.save(bw);
+    }
 	
 	public String requestMedia(Media media){
 		return account.Play(media);
