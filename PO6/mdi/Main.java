@@ -37,6 +37,7 @@ public class Main {
 			}
 		}
 		moes = new Moes();
+		dirty = false;
 	}
 
 	private void save() {
@@ -88,6 +89,7 @@ public class Main {
 				try {
 					moes = new Moes(br);
 					filename = new_filename;
+					dirty = false;
 				} catch (Exception e) {
 					System.err.println("Could not recreate moes: " + e);
 				}
