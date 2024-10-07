@@ -25,8 +25,8 @@ public class Main {
 	private boolean running;
 	private static final String extension = ".txt";
 	private String filename;
-	private static String fileVersion;
-	private static String magicCookie;
+	private static String fileVersion = "1.0";
+	private static String magicCookie = "MOES";
 
 	private void newMoes() {
 		moes = new Moes();
@@ -37,7 +37,7 @@ public class Main {
 			bw.write("" + magicCookie + '\n' + fileVersion + '\n');
 			moes.save(bw);
 		} catch (Exception e) {
-			System.err.println("Failed to save: " + e);
+			System.err.println("Failed to save in main: " + e);
 		}
 	}
 
@@ -66,9 +66,7 @@ public class Main {
 		try {
 			System.out.print("Enter new filename: ");
                         String new_filename = in.nextLine();
-                        if (new_filename.endsWith(extension)) {
-                                filename = new_filename;
-                        } else {
+                        if (!new_filename.endsWith(extension)) {
                                 filename = new_filename + extension;
                         }
 
@@ -76,7 +74,13 @@ public class Main {
 				String file_magic_cookie = br.readLine();
 				String file_version = br.readLine();
 				if (file_magic_cookie == magicCookie && file_version == fileVersion) {
-
+					try {
+						moes = new Moes(br);
+						filename = new_filename;
+					} catch (Exception e) {
+						System.err.println("Could not recreate moes: " + e);
+					}
+				
 				} else {
 					throw new IOException("ERROR: incorrect magic cookie or file version\nmagic cookie: " + file_magic_cookie + ", excpected: " + magicCookie + "\nfile version: " + file_version + ", expected: " + fileVersion);
 				}
@@ -221,6 +225,9 @@ public class Main {
 		menu.addMenuItem(new MenuItem("List Media",       () -> listMedia()));
 		menu.addMenuItem(new MenuItem("List Available Points",     () -> listAvailablePoints()));
 		menu.addMenuItem(new MenuItem("Buy Points",     () -> buyPoints()));
+		menu.addMenuItem(new MenuItem("save",     () -> save()));
+		menu.addMenuItem(new MenuItem("save as",     () -> saveAs()));
+		menu.addMenuItem(new MenuItem("open",     () -> open()));
 		menu.addMenuItem(new MenuItem("Exit",               () -> endApp()));
 	
 	}
