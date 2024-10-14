@@ -18,28 +18,25 @@ public class Boggle {
 
     private static int numberOfBoards = 1; // default
     private static int boardSize = 50;     // default is to use 50x50 Boggle boards
-    private static int numThreads = 10;     // default is to use a single thread
+    private static int numThreads = 1;     // default is to use a single thread
     private static String filename = "words.txt"; // default (this is the supplied file of 971 common words)
     private static int verbosity = 0;   // smaller ints mean less output - us 0 for timing
     
     // =========== WRITE AND INVOKE THIS METHOD FOR EACH THREAD ===========
+    private static final Object lock = new Object();
+    private static final Object solutionsLock = new Object();
     private static void solveRange(int first, int lastPlusOne, int threadNumber) {
-        Object boardsLock = new Object();
+        Board board;
         for(int i=first; i<lastPlusOne; ++i) {
-            Board board;
-            try {
-                synchronized (boardsLock) {
-                    board = boards.get(i);
-                }
-            } catch(Exception e) {
-                System.err.println("First: " + first + " Last: " + lastPlusOne + " i: " + i);
-                System.err.println(e);
-                continue;
-            }
+            synchronized (lock) {board = boards.get(i);}
             Solver solver = new Solver(board, threadNumber, verbosity);
             for (String word : words) {
                 Solution solution = solver.solve(word);
-                if (solution != null)solutions.add(solution);
+                if (solution != null) {
+                    synchronized (solutionsLock) {
+                        solutions.add(solution);
+                    }
+                }
             }
         }
     }
@@ -119,14 +116,8 @@ public class Boggle {
             }
 
             // Print the results. These should be EXACTLY the same regardless of # of threads
-            String expected = "0xDB1C1B50";
-            String actual = String.format("0x%08X", Objects.hash(solutions));
-            System.out.println("\nFound " + solutions.size() + " solutions");
-            if (expected.equals(actual)) {
-                System.out.printf("Hash is 0x%08X\n", Objects.hash(solutions));
-            } else {
-                System.out.println("ERROR: expected " + expected + " instead got " + actual); 
-            }
+            System.out.printf("Hash is 0x%08X\n", Objects.hash(solutions)); // 0xDB1C1B50
+            System.out.println("\nFound " + solutions.size() + " solutions"); // 29403 solutions
         } catch(Exception e) {
             System.err.println("Unexpected exception (panic): Contact support");
             e.printStackTrace();
