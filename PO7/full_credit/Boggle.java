@@ -25,10 +25,11 @@ public class Boggle {
     // =========== WRITE AND INVOKE THIS METHOD FOR EACH THREAD ===========
     private static final Object lock = new Object();
     private static final Object solutionsLock = new Object();
-    private static void solveRange(int first, int lastPlusOne, int threadNumber) {
+    private static int count = 0;
+    private static void solveRange(int threadNumber) {
         Board board;
-        for(int i=first; i<lastPlusOne; ++i) {
-            synchronized (lock) {board = boards.get(i);}
+        while (count < numberOfBoards) {
+            synchronized (lock) {board = boards.get(count++);}
             Solver solver = new Solver(board, threadNumber, verbosity);
             for (String word : words) {
                 Solution solution = solver.solve(word);
