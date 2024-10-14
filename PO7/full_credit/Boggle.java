@@ -1,7 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
+import java.lang.reflect.Array;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -17,13 +17,33 @@ public class Boggle {
     private static Set<Solution> solutions = new TreeSet<>();
 
     private static int numberOfBoards = 1; // default
-    private static int boardSize = 2500;     // default is to use 50x50 Boggle boards
+    private static int boardSize = 50;     // default is to use 50x50 Boggle boards
     private static int numThreads = 10;     // default is to use a single thread
     private static String filename = "words.txt"; // default (this is the supplied file of 971 common words)
     private static int verbosity = 0;   // smaller ints mean less output - us 0 for timing
     
     // =========== WRITE AND INVOKE THIS METHOD FOR EACH THREAD ===========
     private static void solveRange(int first, int lastPlusOne, int threadNumber) {
+        Object boardsLock = new Object();
+        Object solutionsLock = new Object();
+        for(int i=first; i<lastPlusOne; ++i) {
+            Board board;
+            try {
+                synchronized (boardsLock) {
+                    board = boards.get(i);
+                }
+            } catch(Exception e) {
+                System.err.println("Unable to get board " + i + ": " + e);
+                continue;
+            }
+            Solver solver = new Solver(board, threadNumber, verbosity);
+            for (String word : words) {
+                Solution solution = solver.solve(word);
+                synchronized (solutionsLock) {
+                    if (solution != null)solutions.add(solution);
+                }
+            }
+        }
     }
     // =========== END THREAD METHOD ===========
 
@@ -76,22 +96,23 @@ public class Boggle {
             
             // =========== CHANGE THIS BLOCK OF CODE TO ADD THREADING ===========
             // Find words on the Boggle boards, collecting the solutions in a TreeSet
-            int threadNumber = 0; // This will be set to a unique int for each of your threads
-            for (Board board : boards) {
-                Solver solver = new Solver(board, threadNumber, verbosity);
-                for (String word : words) {
-                    Solution solution = solver.solve(word);
-                    if (solution != null)
-                        solutions.add(solution);
+            int range = (int)(numberOfBoards / numThreads);
+            ArrayList<Thread> threads = new ArrayList<>();
+            for (int threadNumber = 0; threadNumber<numThreads; threadNumber++) {
+                int first = threadNumber * range;
+                int lastPlusOne = first + range + 1;
+                int finalThreadNumber = threadNumber;
+                if (threadNumber != numThreads){
+                    threads.add(new Thread(() -> solveRange(first, lastPlusOne, finalThreadNumber)));
+                    threads.get(threadNumber).start();
+                } else {
+                    threads.add(new Thread(() -> solveRange(first, numberOfBoards, finalThreadNumber)));
+                    threads.get(threadNumber).start();
                 }
             }
-            // =========== END BLOCK OF CODE TO ADD THREADING ===========
 
-            // Print all the solutions if requested
-            for (Solution solution : solutions) {
-                log(solution.toString(), 2);
-            }
-
+            for (Thread thread : threads) thread.join();
+            
             // =========== END BLOCK OF CODE TO ADD THREADING ===========
 
             // Print all the solutions if requested
@@ -100,7 +121,7 @@ public class Boggle {
             }
 
             // Print the results. These should be EXACTLY the same regardless of # of threads
-            String expected = "0xD34A3267";
+            String expected = "0xDB1C1B50";
             String actual = String.format("0x%08X", Objects.hash(solutions));
             System.out.println("\nFound " + solutions.size() + " solutions");
             if (expected.equals(actual)) {
