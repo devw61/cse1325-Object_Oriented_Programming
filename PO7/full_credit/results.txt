@@ -21,16 +21,110 @@ QUESTION 2: Provide the full output (including the time command) for your progra
 
 for i in {1..16} ; do echo ; echo $i Threads; time java Boggle 90 - $i ; done
 
+1 Threads
+Hash is 0xDB1C1B50
 
+Found 29403 solutions
+java Boggle 80 - $i  37.69s user 1.00s system 102% cpu 37.678 total
+
+2 Threads
+Hash is 0xDB1C1B50
+
+Found 29403 solutions
+java Boggle 80 - $i  34.62s user 0.61s system 203% cpu 17.351 total
+
+3 Threads
+Hash is 0xDB1C1B50
+
+Found 29403 solutions
+java Boggle 80 - $i  27.05s user 0.42s system 292% cpu 9.397 total
+
+4 Threads
+Hash is 0xDB1C1B50
+
+Found 29403 solutions
+java Boggle 80 - $i  24.74s user 0.36s system 396% cpu 6.332 total
+
+5 Threads
+Hash is 0xDB1C1B50
+
+Found 29403 solutions
+java Boggle 80 - $i  30.51s user 0.40s system 500% cpu 6.181 total
+
+6 Threads
+Hash is 0xDB1C1B50
+
+Found 29403 solutions
+java Boggle 80 - $i  31.09s user 0.46s system 509% cpu 6.189 total
+
+7 Threads
+Hash is 0xDB1C1B50
+
+Found 29403 solutions
+java Boggle 80 - $i  30.77s user 0.52s system 552% cpu 5.658 total
+
+8 Threads
+Hash is 0xDB1C1B50
+
+Found 29403 solutions
+java Boggle 80 - $i  30.57s user 0.56s system 774% cpu 4.022 total
+
+9 Threads
+Hash is 0xDB1C1B50
+
+Found 29403 solutions
+java Boggle 80 - $i  26.12s user 0.63s system 478% cpu 5.590 total
+
+10 Threads
+Hash is 0xDB1C1B50
+
+Found 29403 solutions
+java Boggle 80 - $i  32.59s user 0.88s system 928% cpu 3.605 total
+
+11 Threads
+Hash is 0xDB1C1B50
+
+Found 29403 solutions
+java Boggle 80 - $i  34.27s user 1.23s system 759% cpu 4.675 total
+
+12 Threads
+Hash is 0xDB1C1B50
+
+Found 29403 solutions
+java Boggle 80 - $i  35.46s user 1.09s system 604% cpu 6.049 total
+
+13 Threads
+Hash is 0xDB1C1B50
+
+Found 29403 solutions
+java Boggle 80 - $i  24.93s user 1.29s system 884% cpu 2.963 total
+
+14 Threads
+Hash is 0xDB1C1B50
+
+Found 29403 solutions
+java Boggle 80 - $i  36.87s user 1.40s system 472% cpu 8.104 total
+
+15 Threads
+Hash is 0xDB1C1B50
+
+Found 29403 solutions
+java Boggle 80 - $i  37.56s user 1.18s system 670% cpu 5.779 total
+
+16 Threads
+Hash is 0xDB1C1B50
+
+Found 29403 solutions
+java Boggle 80 - $i  33.64s user 1.31s system 1078% cpu 3.240 total
 
 
 QUESTION 3: Does adding more threads continue to speed up the program? Do more threads ever slow down the program slightly?  Why or why not?
 
-
+If you do not add too many threads, they significantly decrease the runtime of the program. If too many threads are added then runtime could increase
 
 QUESTION 4: Does adding more threads increase the "system load", or is it constant regardless of the number of threads?  Why?
 
-Yes, from 0.285 seconds to 1.667 seconds for this data set
+Yes, adding threads does add to the system load. While the precentages do not make sense on why they are so large, the user understands that more of the cpu is being used
 
 
 
