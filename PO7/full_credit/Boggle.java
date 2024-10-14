@@ -25,7 +25,6 @@ public class Boggle {
     // =========== WRITE AND INVOKE THIS METHOD FOR EACH THREAD ===========
     private static void solveRange(int first, int lastPlusOne, int threadNumber) {
         Object boardsLock = new Object();
-        Object solutionsLock = new Object();
         for(int i=first; i<lastPlusOne; ++i) {
             Board board;
             try {
@@ -33,15 +32,14 @@ public class Boggle {
                     board = boards.get(i);
                 }
             } catch(Exception e) {
-                System.err.println("Unable to get board " + i + ": " + e);
+                System.err.println("First: " + first + " Last: " + lastPlusOne + " i: " + i);
+                System.err.println(e);
                 continue;
             }
             Solver solver = new Solver(board, threadNumber, verbosity);
             for (String word : words) {
                 Solution solution = solver.solve(word);
-                synchronized (solutionsLock) {
-                    if (solution != null)solutions.add(solution);
-                }
+                if (solution != null)solutions.add(solution);
             }
         }
     }
@@ -100,9 +98,9 @@ public class Boggle {
             ArrayList<Thread> threads = new ArrayList<>();
             for (int threadNumber = 0; threadNumber<numThreads; threadNumber++) {
                 int first = threadNumber * range;
-                int lastPlusOne = first + range + 1;
+                int lastPlusOne = first + range;
                 int finalThreadNumber = threadNumber;
-                if (threadNumber != numThreads){
+                if (threadNumber < numThreads-1){
                     threads.add(new Thread(() -> solveRange(first, lastPlusOne, finalThreadNumber)));
                     threads.get(threadNumber).start();
                 } else {
