@@ -40,7 +40,6 @@ public class Boggle {
             }
         }
     }
-
     // =========== END THREAD METHOD ===========
 
 
@@ -92,11 +91,19 @@ public class Boggle {
             
             // =========== CHANGE THIS BLOCK OF CODE TO ADD THREADING ===========
             // Find words on the Boggle boards, collecting the solutions in a TreeSet
+            int range = (int)(numberOfBoards / numThreads);
             ArrayList<Thread> threads = new ArrayList<>();
             for (int threadNumber = 0; threadNumber<numThreads; threadNumber++) {
-                int threadId = threadNumber;
-                threads.add(new Thread(() -> solveRange(threadId)));
-                threads.get(threadNumber).start();
+                int first = threadNumber * range;
+                int lastPlusOne = first + range;
+                int finalThreadNumber = threadNumber;
+                if (threadNumber < numThreads-1){
+                    threads.add(new Thread(() -> solveRange(first, lastPlusOne, finalThreadNumber)));
+                    threads.get(threadNumber).start();
+                } else {
+                    threads.add(new Thread(() -> solveRange(first, numberOfBoards, finalThreadNumber)));
+                    threads.get(threadNumber).start();
+                }
             }
 
             for (Thread thread : threads) thread.join();
