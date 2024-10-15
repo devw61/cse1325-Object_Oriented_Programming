@@ -25,11 +25,10 @@ public class Boggle {
     // =========== WRITE AND INVOKE THIS METHOD FOR EACH THREAD ===========
     private static final Object lock = new Object();
     private static final Object solutionsLock = new Object();
-    private static int count = 0;
-    private static void solveRange(int threadNumber) {
+    private static void solveRange(int first, int lastPlusOne, int threadNumber) {
         Board board;
-        while (count < numberOfBoards) {
-            synchronized (lock) {board = boards.get(count++);}
+        for(int i=first; i<lastPlusOne; ++i) {
+            synchronized (lock) {board = boards.get(i);}
             Solver solver = new Solver(board, threadNumber, verbosity);
             for (String word : words) {
                 Solution solution = solver.solve(word);
@@ -41,7 +40,6 @@ public class Boggle {
             }
         }
     }
-
     // =========== END THREAD METHOD ===========
 
 
@@ -93,11 +91,19 @@ public class Boggle {
             
             // =========== CHANGE THIS BLOCK OF CODE TO ADD THREADING ===========
             // Find words on the Boggle boards, collecting the solutions in a TreeSet
+            int range = (int)(numberOfBoards / numThreads);
             ArrayList<Thread> threads = new ArrayList<>();
             for (int threadNumber = 0; threadNumber<numThreads; threadNumber++) {
-                int threadId = threadNumber;
-                threads.add(new Thread(() -> solveRange(threadId)));
-                threads.get(threadNumber).start();
+                int first = threadNumber * range;
+                int lastPlusOne = first + range;
+                int finalThreadNumber = threadNumber;
+                if (threadNumber < numThreads-1){
+                    threads.add(new Thread(() -> solveRange(first, lastPlusOne, finalThreadNumber)));
+                    threads.get(threadNumber).start();
+                } else {
+                    threads.add(new Thread(() -> solveRange(first, numberOfBoards, finalThreadNumber)));
+                    threads.get(threadNumber).start();
+                }
             }
 
             for (Thread thread : threads) thread.join();
