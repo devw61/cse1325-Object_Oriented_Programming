@@ -137,7 +137,103 @@ BONUS
 
 QUESTION 5: Time your version of Boggle as you did for the full credit version. Is this additional layer of threading faster, slower, or roughly equivalent in performance? Why?
 
+This way seems to be faster if the right amount of threads are used (eg Threads 2). Obviously, if only one thread is used then there wont be much of a difference, but it seems if there is an excesive amount of threads used then it does not really matter if you use thread pooling or not.
 
 YOUR Timing:
 
+1 Threads
+Hash is 0x437B7109
+
+Found 33074 solutions
+java Boggle 90 - $i  55.36s user 1.41s system 101% cpu 55.737 total
+
+2 Threads
+Hash is 0x437B7109
+
+Found 33074 solutions
+java Boggle 90 - $i  31.50s user 0.53s system 202% cpu 15.840 total
+
+3 Threads
+Hash is 0x437B7109
+
+Found 33074 solutions
+java Boggle 90 - $i  30.91s user 0.47s system 303% cpu 10.334 total
+
+4 Threads
+Hash is 0x437B7109
+
+Found 33074 solutions
+java Boggle 90 - $i  27.74s user 0.38s system 379% cpu 7.413 total
+
+5 Threads
+Hash is 0x437B7109
+
+Found 33074 solutions
+java Boggle 90 - $i  28.57s user 0.40s system 495% cpu 5.849 total
+
+6 Threads
+Hash is 0x437B7109
+
+Found 33074 solutions
+java Boggle 90 - $i  34.41s user 0.44s system 595% cpu 5.852 total
+
+7 Threads
+Hash is 0x437B7109
+
+Found 33074 solutions
+java Boggle 90 - $i  29.03s user 0.46s system 484% cpu 6.092 total
+
+8 Threads
+Hash is 0x437B7109
+
+Found 33074 solutions
+java Boggle 90 - $i  36.20s user 0.64s system 661% cpu 5.572 total
+
+9 Threads
+Hash is 0x437B7109
+
+Found 33074 solutions
+java Boggle 90 - $i  35.73s user 0.72s system 864% cpu 4.217 total
+
+10 Threads
+Hash is 0x437B7109
+
+Found 33074 solutions
+java Boggle 90 - $i  36.36s user 0.84s system 943% cpu 3.940 total
+
+11 Threads
+Hash is 0x437B7109
+
+Found 33074 solutions
+java Boggle 90 - $i  38.54s user 0.93s system 866% cpu 4.553 total
+
+12 Threads
+Hash is 0x437B7109
+
+Found 33074 solutions
+java Boggle 90 - $i  39.20s user 1.19s system 681% cpu 5.924 total
+
+13 Threads
+Hash is 0x437B7109
+
+Found 33074 solutions
+java Boggle 90 - $i  36.49s user 1.07s system 494% cpu 7.595 total
+
+14 Threads
+Hash is 0x437B7109
+
+Found 33074 solutions
+java Boggle 90 - $i  37.24s user 1.13s system 695% cpu 5.518 total
+
+15 Threads
+Hash is 0x437B7109
+
+Found 33074 solutions
+java Boggle 90 - $i  34.84s user 1.22s system 1081% cpu 3.333 total
+
+16 Threads
+Hash is 0x437B7109
+
+Found 33074 solutions
+java Boggle 90 - $i  41.61s user 1.40s system 534% cpu 8.042 total
 
