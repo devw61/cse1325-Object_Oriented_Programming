@@ -18,7 +18,27 @@ class Clock {
 
 		virtual ~Clock ();
 
-		
+		void print() {
+			std::cout << std::setfill('0') << std::setw(2) << _hours << ":"
+        	          << std::setfill('0') << std::setw(2) << _minutes << ":"
+	                  << std::setfill('0') << std::setw(2) << _seconds << std::endl;
+		}
+
+		void _tick() {
+			_seconds++; 
+			if (_seconds == 60) {
+				_seconds = 0;
+				_minutes++;
+			}
+			if (_minutes == 60) {
+				_minutes = 0;
+				_hours++;
+			}
+			if (_hours == 24) {
+				_hours = 0;
+			}
+		}
+	
 
 	protected:
 		int _hours, _minutes, _seconds;
