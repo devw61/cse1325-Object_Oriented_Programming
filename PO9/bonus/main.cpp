@@ -1,7 +1,7 @@
 #include <iostream>
 #include <array>
 
-#include "clock.h"
+#include "timer.h"
 
 int main(int argc, char *argv[]){
 
@@ -11,12 +11,13 @@ int main(int argc, char *argv[]){
     }
 
     try {
-        Clock clock(std::stoi(argv[1]), std::stoi(argv[2]), std::stoi(argv[3]));
+        Timer timer(std::stoi(argv[1]), std::stoi(argv[2]), std::stoi(argv[3]));
+        timer.print();
         while (std::cin.get() != 'q') {
-            clock.tick();
-            clock.print();
+            timer.tick();
+            timer.print();
         }
-    } catch (std::out_of_range& e) {
+    } catch (std::runtime_error& e) {
         std::cerr << e.what() << std::endl;
         exit(-1);
     }

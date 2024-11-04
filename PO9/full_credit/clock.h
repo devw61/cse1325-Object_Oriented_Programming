@@ -9,7 +9,7 @@ public:
     void print();
     void tick();
 
-private:
+protected:
     int _hours, _minutes, _seconds;
 };
 

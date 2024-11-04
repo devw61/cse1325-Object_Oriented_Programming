@@ -12,6 +12,7 @@ int main(int argc, char *argv[]){
 
     try {
         Clock clock(std::stoi(argv[1]), std::stoi(argv[2]), std::stoi(argv[3]));
+        clock.print();
         while (std::cin.get() != 'q') {
             clock.tick();
             clock.print();
