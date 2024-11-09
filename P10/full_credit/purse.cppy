@@ -6,8 +6,6 @@ Purse::Purse(int pounds, int shillings, int pence)
 }
 
 std::ostream& operator<<(std::ostream& ost, const Purse& purse) {
-	ost << "£" << purse._pounds << " " << purse._shillings << "s" << purse._pence << "d";
+	ost << "£" << _pounds << "." << purse._shillings << "." << purse._pence;
 	return ost;
 }
-
-
