@@ -2,24 +2,24 @@
 
 Purse::Purse(int pounds, int shillings, int pence)
 	: _pounds{pounds}, _shillings{shillings}, _pence{pence} {
-		// rationalize();
+		rationalize();
 }
 
-// std::ostream &operator<<(std::ostream &ost, const Purse &purse){
-// 	ost << "£" << purse._pounds << " " << purse._shillings << "s" << purse._pence << "d";
-// 	return ost;
-// }
+std::ostream& operator<<(std::ostream& os, const Purse& purse){
+	os << "£" << purse._pounds << " " << purse._shillings << "s" << purse._pence << "d";
+	return os;
+}
 
 Purse& Purse::operator++(){
 	++_pence;
-	// rationalize();
+	rationalize();
 	return *this;
 }
 
 Purse Purse::operator++(int){
 	Purse purse{*this};
 	++_pence;
-	// rationalize();
+	rationalize();
 	return purse;
 }
 

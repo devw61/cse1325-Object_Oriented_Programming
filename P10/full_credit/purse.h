@@ -1,7 +1,7 @@
 #ifndef __PURSE_H
 #define __PURSE_H
 
-#include <ostream>
+#include <iostream>
 
 class Purse {
 	public:
