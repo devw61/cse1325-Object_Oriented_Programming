@@ -1,4 +1,4 @@
- CXXFLAGS += --std=c++20
+CXXFLAGS += --std=c++20
 
 bank: bank.o purse.o *.h
 	$(CXX) $(CXXFLAGS) bank.o purse.o  -o bank
