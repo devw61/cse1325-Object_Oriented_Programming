@@ -11,9 +11,11 @@ std::ostream& operator<<(std::ostream& ost, const Purse& purse){
 }
 
 std::istream &operator>>(std::istream& ist, Purse& purse){
-	char character;
-	// #(num) (num)
-	ist >> character >> purse._pounds >> character >> purse._shillings >> character >> purse._pence >> character;
+	char pound_sign, s, d;
+	ist >> pound_sign >> purse._pounds >> purse._shillings >> s >> purse._pence >> d;
+	if (pound_sign != '#' || s != 's' || d != 'd') {
+		ist.setstate(std::ios::failbit);
+	}
 	return ist;
 }
 
