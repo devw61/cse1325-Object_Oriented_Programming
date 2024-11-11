@@ -17,24 +17,29 @@ Purse& Purse::operator++(){
 }
 
 Purse Purse::operator++(int){
-	Purse purse{*this};
+	Purse old_purse{*this};
 	++_pence;
 	rationalize();
-	return purse;
+	return old_purse;
 }
 
 Purse Purse::operator+(const Purse& other) {
-    return Purse(_pounds + other._pounds, _shillings + other._shillings, _pence + other._pence);
+    Purse result{_pounds + other._pounds, _shillings + other._shillings, _pence + other._pence};
+    result.rationalize();
+    return result;
 }
 
 Purse Purse::operator-(const Purse& other) {
-    return Purse(_pounds - other._pounds, _shillings - other._shillings, _pence - other._pence);
+    Purse result{_pounds - other._pounds, _shillings - other._shillings, _pence - other._pence};
+    result.rationalize();
+    return result;
 }
 
 Purse& Purse::operator+=(const Purse& other) {
 	_pounds += other._pounds;
 	_shillings += other._shillings;
 	_pence += other._pence;
+	rationalize();
 	return *this;
 }
 
@@ -42,17 +47,29 @@ Purse& Purse::operator-=(const Purse& other) {
 	_pounds -= other._pounds;
 	_shillings -= other._shillings;
 	_pence -= other._pence;
+	rationalize();
 	return *this;
 }
 
 void Purse::rationalize() {
-	if (_pence >= 20){
-		_shillings += _pence / 20;
-		_pence %= 20;
+	if (_pence < 0) {
+		int borrow_shillings = (-_pence + 11) / 12;
+		_shillings -= borrow_shillings;
+		_pence += borrow_shillings * 12;
 	}
-	if (_shillings >= 12){
-		_pounds += _shillings / 12;
-		_shillings %= 12;
+	if (_pence >= 12) {
+		_shillings += _pence / 12;
+		_pence %= 12;
+	}
+
+	if (_shillings < 0) {
+		int borrow_pounds = (-_shillings + 19) / 20;
+		_pounds -= borrow_pounds;
+		_shillings += borrow_pounds * 20;
+	}
+	if (_shillings >= 20) {
+		_pounds += _shillings / 20;
+		_shillings %= 20;
 	}
 }
 
