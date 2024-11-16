@@ -7,7 +7,7 @@ class Date {
 	public:
 		Date(int year, int month, int day);
 		friend std::ostream& operator<<(std::ostream& ost, const Date& date);
-		auto operator<=>(const Date&);
+		auto operator<=>(const Date&) const = default;
 	private:
 		int _year;
 		int _month;

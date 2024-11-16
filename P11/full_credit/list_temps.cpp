@@ -4,7 +4,7 @@
 #include <map>
 
 typedef double Temp; 
-typedef std::map<Date, Temp> temps;
+typedef std::map<Date, Temp> Temps;
 
 int main(int argc, char* argv[]){
     	if (argc != 2) {
@@ -20,6 +20,7 @@ int main(int argc, char* argv[]){
 
 	while (ifs){
 		std::string val;
+        Temps temps;
         int year, month, day;
 
 		for (int i = 0; i < 7; i++){
@@ -37,6 +38,11 @@ int main(int argc, char* argv[]){
             } 
         }
         Date date{year, month, day};
+
+        std::getline(ifs, val, ',');
+        temps[date] = std::stod(val);
+
+        std::getline(ifs, val, '\n');
     }
         
 }
