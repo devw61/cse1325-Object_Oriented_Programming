@@ -60,8 +60,8 @@ int main(int argc, char* argv[]){
         Date end_date{end_year, end_month, end_day};
 
         std::cout << std::endl << "Temperatures between " << start_date << " and " << end_date << ":" << std::endl << std::endl;
-    
-        auto it = temps.begin();
+
+        auto it = temps.find(start_date);
         while (it != temps.end()){
             Date current_date = it->first;
             int current_temp = it->second;
