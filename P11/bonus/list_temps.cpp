@@ -62,12 +62,12 @@ int main(int argc, char* argv[]){
         std::cout << std::endl << "Temperatures between " << start_date << " and " << end_date << ":" << std::endl << std::endl;
 
         auto it = temps.find(start_date);
-        while (it != temps.find(end_date)){
+        auto end = temps.find(end_date);
+
+        while (it != temps.find(end_date) && it != temps.end()){
             Date current_date = it->first;
             int current_temp = it->second;
-            if (current_date >= start_date && current_date <= end_date){
-                std::cout << it->first << " " << it->second << std::endl;
-            }
+            std::cout << it->first << " " << it->second << std::endl;
             it++;
         }
     }
