@@ -7,7 +7,11 @@ typedef double Temp;
 typedef std::map<Date, Temp> Temps;
 
 int main(int argc, char* argv[]){
-    	if (argc != 2) {
+    int start_year, start_month, start_day, end_year, end_month, end_day;
+    Temps temps;
+
+    if (argc != 2)
+    {
 		std::cerr << "Usage: <program name> <data file>" << std::endl;
         return -1;
     	}
@@ -20,7 +24,6 @@ int main(int argc, char* argv[]){
 
 	while (ifs){
 		std::string val;
-        Temps temps;
         int year, month, day;
 
 		for (int i = 0; i < 7; i++){
@@ -42,7 +45,36 @@ int main(int argc, char* argv[]){
         std::getline(ifs, val, ',');
         temps[date] = std::stod(val);
 
-        std::getline(ifs, val, '\n');
+        std::getline(ifs, val, '\n'); // ignore new line char
+    }
+
+    while (true){
+        std::cout << "Enter start date (year month day): ";
+        std::cin >> start_year >> start_month >> start_day;
+        if (!std::cin) break;
+        Date start_date{start_year, start_month, start_day};
+
+        std::cout << "Enter end date (year month day): ";
+        std::cin >> end_year >> end_month >> end_day;
+        if (!std::cin) break;
+        Date end_date{end_year, end_month, end_day};
+
+        std::cout << std::endl << "Temperatures between " << start_date << " and " << end_date << ":" << std::endl << std::endl;
+    
+        auto it = temps.begin();
+        while (it != temps.end()){
+            Date current_date = it->first;
+            int current_temp = it->second;
+            if (current_date >= start_date && current_date <= end_date){
+                std::cout << it->first << " " << it->second << std::endl;
+            }
+            it++;
+        }
+        // if (temps.find(date) != temps.end()){
+        //     std::cout << "Temperature on " << date << " was " << temps[date] << std::endl;
+        // } else {
+        //     std::cout << "No temperature data for " << date << std::endl;
+        // }
     }
         
 }
